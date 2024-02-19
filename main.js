@@ -19,10 +19,14 @@
        }
     });
     clearCompletedButton.addEventListener('click', function() {
+        event.preventDefault();
         let completedTodos = findCheckedItems();
+        console.log(completedTodos);
+        if (completedTodos.length > 0) {
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
         todoCounter -= completedTodos.length;
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer); 
+        }   
     });
 });
 
