@@ -3,10 +3,11 @@
     let inputBar = document.querySelector('#input-bar');
     let toggleButton = document.querySelector('#toggle');
     let todoCounter = 0;
+    let filterContainer = document.querySelector('.filters');
     let filters = document.querySelectorAll('.filters a');
     let todoCountText = document.querySelector('.todo-count');
     let clearCompletedButton = document.querySelector('#clear-completed');
-    hideOrShowToggle(todoCounter, toggleButton);
+    hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
     //eventlistener for input bar
     inputBar.addEventListener('keydown', function(event){
         //so that the code only runs when enter is pressed
@@ -14,26 +15,30 @@
         addListItem(inputBar, todoList, todoCounter);
         event.preventDefault();
         todoCounter++;
-        hideOrShowToggle(todoCounter, toggleButton);
+        hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
        }
     });
     clearCompletedButton.addEventListener('click', function() {
         let completedTodos = findCheckedItems();
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
         todoCounter -= completedTodos.length;
-        hideOrShowToggle(todoCounter, toggleButton); 
+        hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer); 
     });
 });
 
-function hideOrShowToggle(todoCounter, toggleButton) {
+function hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer) {
     if (todoCounter > 0) {
         toggleButton.style.visibility = 'visible';
+        filterContainer.style.visibility = 'visible';
+
     }
     else {
         toggleButton.style.visibility = 'hidden';
+        filterContainer.style.visibility = 'hidden';
     }
 }
-function addListItem(inputBar, todoList, todoCounter) {
+
+function addListItem(inputBar, todoList) {
     let newItem = inputBar.value;
     if (newItem !== '') {
         //create li element
