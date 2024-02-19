@@ -2,29 +2,38 @@
     let todoList = document.querySelector('.todo-list');
     let inputBar = document.querySelector('#input-bar');
     let toggleButton = document.querySelector('#toggle');
-    toggleButton.style.visibility = 'hidden';
+    let todoCounter = 0;
     let filters = document.querySelectorAll('.filters a');
-    let todoCount = document.querySelector('.todo-count');
+    let todoCountText = document.querySelector('.todo-count');
     let clearCompletedButton = document.querySelector('#clear-completed');
+    hideOrShowToggle(todoCounter, toggleButton);
     //eventlistener for input bar
     inputBar.addEventListener('keydown', function(event){
         //so that the code only runs when enter is pressed
        if (event.key === 'Enter') {
-        addListItem(inputBar, todoList);
+        addListItem(inputBar, todoList, todoCounter);
         event.preventDefault();
-        //show togglebutton
-        toggleButton.style.visibility = 'visible';
+        todoCounter++;
+        hideOrShowToggle(todoCounter, toggleButton);
        }
     });
     clearCompletedButton.addEventListener('click', function() {
         let completedTodos = findCheckedItems();
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
-
-        
+        todoCounter -= completedTodos.length;
+        hideOrShowToggle(todoCounter, toggleButton); 
     });
 });
 
-function addListItem(inputBar, todoList) {
+function hideOrShowToggle(todoCounter, toggleButton) {
+    if (todoCounter > 0) {
+        toggleButton.style.visibility = 'visible';
+    }
+    else {
+        toggleButton.style.visibility = 'hidden';
+    }
+}
+function addListItem(inputBar, todoList, todoCounter) {
     let newItem = inputBar.value;
     if (newItem !== '') {
         //create li element
@@ -51,6 +60,5 @@ function findCheckedItems() {
             completedItems.push(checkBoxes[i].parentNode);
         }
     }
-    console.log('Found checkboxes: ', completedItems);
     return completedItems;
 }
