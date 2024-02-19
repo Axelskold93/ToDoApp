@@ -50,12 +50,35 @@ header {
     background-color: transparent;
     font-style: italic;
 }
+.todo-list {
+    list-style-type: none;
+
+
+    
+}
+#list-item {
+    display: flex;
+    flex-direction: row;
+    width: 562.5px; 
+    height: 65px;
+    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    background-color: white;
+    font-size: 24px;
+    align-items: center;
+    padding: 10px;
+}
+#todo-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
 
 
 footer {
     text-align: center;
     width: 100%;
-    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 5px;
     font-size: 11px;
 }
 
