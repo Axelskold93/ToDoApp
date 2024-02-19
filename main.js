@@ -8,6 +8,14 @@
     let todoCountText = document.querySelector('.todo-count');
     let clearCompletedButton = document.querySelector('#clear-completed');
     hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
+
+    filters.forEach(filter => {
+        filter.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            let filterType = filter.getAttribute('href').slice(2); 
+            applyFilter(filterType); 
+        });
+    });
     //eventlistener for input bar
     inputBar.addEventListener('keydown', function(event){
         //so that the code only runs when enter is pressed
@@ -70,4 +78,27 @@ function findCheckedItems() {
         }
     }
     return completedItems;
+}
+
+function applyFilter(filterType) {
+    let todoItems = document.querySelectorAll('.todo-list > *');
+    todoItems.forEach(item => {
+        if (filterType === 'all') {
+            item.style.display = 'block'; 
+        } else if (filterType === 'active') {
+            let checkBox = item.querySelector('.todo-checkbox');
+            if (!checkBox.checked) {
+                item.style.display = 'block'; 
+            } else {
+                item.style.display = 'none';
+            }
+        } else if (filterType === 'completed') {
+            let completedItems = findCheckedItems();
+            if (completedItems.includes(item)) {
+                item.style.display = 'block'; 
+            } else {
+                item.style.display = 'none';
+            }
+        }
+    });
 }
