@@ -15,6 +15,7 @@
         let checkBoxes = document.querySelectorAll('.todo-checkbox');
         let allChecked = true;
     
+
         checkBoxes.forEach(checkBox => {
             if (!checkBox.checked) {
                 allChecked = false;
@@ -145,22 +146,15 @@ function findCheckedItems() {
 function applyFilter(filterType) {
     let todoItems = document.querySelectorAll('.todo-list > *');
     todoItems.forEach(item => {
+        let checkBox = item.querySelector('.todo-checkbox');
+        let completed = checkBox.checked;
+
         if (filterType === 'all') {
             item.style.display = 'block'; 
         } else if (filterType === 'active') {
-            let checkBox = item.querySelector('.todo-checkbox');
-            if (!checkBox.checked) {
-                item.style.display = 'block'; 
-            } else {
-                item.style.display = 'none';
-            }
+            item.style.display = completed ? 'none' : 'block';
         } else if (filterType === 'completed') {
-            let completedItems = findCheckedItems();
-            if (completedItems.includes(item)) {
-                item.style.display = 'block'; 
-            } else {
-                item.style.display = 'none';
-            }
+            item.style.display = completed ? 'block' : 'none';
         }
     });
 }
