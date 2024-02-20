@@ -5,7 +5,6 @@
     let todoCounter = 0;
     let filterContainer = document.querySelector('.filters');
     let filters = document.querySelectorAll('.filters a');
-    let todoCountText = document.querySelector('.todo-count');
     let clearCompletedButton = document.querySelector('#clear-completed');
     hideOrShowClearButton(clearCompletedButton);
     
@@ -36,11 +35,13 @@
         todoCounter++;
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         
+        
        }
     });
     todoList.addEventListener('change', function(event) {
         if (event.target.classList.contains('todo-checkbox')) {
             hideOrShowClearButton(clearCompletedButton); // Update clear button visibility
+            updateItemsLeft();
         }
     });
    
@@ -52,6 +53,7 @@
         if (completedTodos.length > 0) {
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
         todoCounter -= completedTodos.length;
+        updateItemsLeft(todoCounter);
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         hideOrShowClearButton(clearCompletedButton); 
         }   
@@ -105,6 +107,7 @@ function addListItem(inputBar, todoList) {
         todoList.appendChild(listItem);
         //reset the input bar
         inputBar.value = '';
+        updateItemsLeft();
 
     }
 }
@@ -142,3 +145,16 @@ function applyFilter(filterType) {
         }
     });
 }
+function updateItemsLeft() {
+    let itemsLeft = document.getElementById('items-left');
+    let totalItems = document.querySelectorAll('.todo-list li').length;
+    let checkedItems = findCheckedItems().length;
+    unCheckedItems = totalItems - checkedItems;
+    if (unCheckedItems === 1) {
+    itemsLeft.textContent = unCheckedItems + ' item left';
+    }
+    else {
+        itemsLeft.textContent = unCheckedItems + ' items left';
+    }
+}
+
