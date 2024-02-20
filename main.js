@@ -13,14 +13,22 @@
 
     toggleButton.addEventListener('click', function() {
         let checkBoxes = document.querySelectorAll('.todo-checkbox');
-        
-            checkBoxes.forEach(checkBox => {
-                checkBox.checked = !checkBox.checked;
-                updateItemsLeft();
+        let allChecked = true;
+    
+        checkBoxes.forEach(checkBox => {
+            if (!checkBox.checked) {
+                allChecked = false;
+            }
+        });
+    
+        checkBoxes.forEach(checkBox => {
+            checkBox.checked = !allChecked;
+        });
+
+        updateItemsLeft();
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         hideOrShowClearButton(clearCompletedButton);
-            });
-        });
+    });
 
     filters.forEach(filter => {
         filter.addEventListener('click', function(event) {
