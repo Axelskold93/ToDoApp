@@ -16,6 +16,9 @@
         
             checkBoxes.forEach(checkBox => {
                 checkBox.checked = !checkBox.checked;
+                updateItemsLeft();
+        hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
+        hideOrShowClearButton(clearCompletedButton);
             });
         });
 
@@ -31,7 +34,7 @@
         //so that the code only runs when enter is pressed
        if (event.key === 'Enter') {
         event.preventDefault();
-        addListItem(inputBar, todoList, todoCounter);
+        addListItem(inputBar, todoList);
         todoCounter++;
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         
@@ -45,19 +48,29 @@
         }
     });
    
-
     clearCompletedButton.addEventListener('click', function() {
         event.preventDefault();
         let completedTodos = findCheckedItems();
-        console.log(completedTodos);
+    
         if (completedTodos.length > 0) {
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
         todoCounter -= completedTodos.length;
-        updateItemsLeft(todoCounter);
+        updateItemsLeft();
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         hideOrShowClearButton(clearCompletedButton); 
         }   
     });
+    todoList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-button')) {
+            let listItem = event.target.parentNode;
+            todoList.removeChild(listItem);
+            todoCounter -= 1;
+            updateItemsLeft();
+            hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
+        hideOrShowClearButton(clearCompletedButton);
+        }
+    })
+    
 });
 
 function hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer) {
@@ -96,14 +109,12 @@ function addListItem(inputBar, todoList) {
         let deleteButton = document.createElement('button');
         deleteButton.textContent = '❌';
         deleteButton.className = 'delete-button';
-        deleteButton.addEventListener('click', function() {
-            todoList.removeChild(listItem); 
-        });
 
         //append items to ul
-        listItem.appendChild(deleteButton);
+        
         listItem.appendChild(checkBox);
         listItem.appendChild(document.createTextNode(newItem));
+        listItem.appendChild(deleteButton);
         todoList.appendChild(listItem);
         //reset the input bar
         inputBar.value = '';

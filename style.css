@@ -72,6 +72,17 @@ header {
     height: 20px;
     margin-right: 10px;
 }
+.delete-button {
+    visibility: hidden;
+    margin-left: auto;
+}
+#list-item:hover .delete-button {
+    visibility: visible;
+    filter: grayscale(100%);
+}
+#list-item:hover .delete-button:hover {
+    filter: grayscale(0%);
+}
 .filters {
     display: flex;
     flex-direction: row;
