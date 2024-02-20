@@ -12,6 +12,14 @@
     
     hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
 
+    toggleButton.addEventListener('click', function() {
+        let checkBoxes = document.querySelectorAll('.todo-checkbox');
+        
+            checkBoxes.forEach(checkBox => {
+                checkBox.checked = !checkBox.checked;
+            });
+        });
+
     filters.forEach(filter => {
         filter.addEventListener('click', function(event) {
             event.preventDefault(); 
@@ -82,7 +90,16 @@ function addListItem(inputBar, todoList) {
         let checkBox = document.createElement('input');
         checkBox.setAttribute('type', 'checkbox');
         checkBox.className = 'todo-checkbox';
+
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = '❌';
+        deleteButton.className = 'delete-button';
+        deleteButton.addEventListener('click', function() {
+            todoList.removeChild(listItem); 
+        });
+
         //append items to ul
+        listItem.appendChild(deleteButton);
         listItem.appendChild(checkBox);
         listItem.appendChild(document.createTextNode(newItem));
         todoList.appendChild(listItem);
