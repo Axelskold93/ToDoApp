@@ -7,6 +7,9 @@
     let filters = document.querySelectorAll('.filters a');
     let todoCountText = document.querySelector('.todo-count');
     let clearCompletedButton = document.querySelector('#clear-completed');
+    hideOrShowClearButton(clearCompletedButton);
+    
+    
     hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
 
     filters.forEach(filter => {
@@ -20,12 +23,20 @@
     inputBar.addEventListener('keydown', function(event){
         //so that the code only runs when enter is pressed
        if (event.key === 'Enter') {
-        addListItem(inputBar, todoList, todoCounter);
         event.preventDefault();
+        addListItem(inputBar, todoList, todoCounter);
         todoCounter++;
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
+        
        }
     });
+    todoList.addEventListener('change', function(event) {
+        if (event.target.classList.contains('todo-checkbox')) {
+            hideOrShowClearButton(clearCompletedButton); // Update clear button visibility
+        }
+    });
+   
+
     clearCompletedButton.addEventListener('click', function() {
         event.preventDefault();
         let completedTodos = findCheckedItems();
@@ -33,7 +44,8 @@
         if (completedTodos.length > 0) {
         completedTodos.forEach(listItem => todoList.removeChild(listItem));
         todoCounter -= completedTodos.length;
-        hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer); 
+        hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
+        hideOrShowClearButton(clearCompletedButton); 
         }   
     });
 });
@@ -48,6 +60,16 @@ function hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer) {
         toggleButton.style.visibility = 'hidden';
         filterContainer.style.visibility = 'hidden';
     }
+}
+
+function hideOrShowClearButton(clearCompletedButton) {
+    let boxChecked = findCheckedItems();
+    if (boxChecked.length > 0) {
+        clearCompletedButton.style.visibility = 'visible';
+    } else {
+        clearCompletedButton.style.visibility = 'hidden';
+    }
+
 }
 
 function addListItem(inputBar, todoList) {
@@ -79,6 +101,7 @@ function findCheckedItems() {
     }
     return completedItems;
 }
+
 
 function applyFilter(filterType) {
     let todoItems = document.querySelectorAll('.todo-list > *');
