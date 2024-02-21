@@ -14,7 +14,6 @@
     toggleButton.addEventListener('click', function() {
         let checkBoxes = document.querySelectorAll('.todo-checkbox');
         let allChecked = true;
-    
 
         checkBoxes.forEach(checkBox => {
             if (!checkBox.checked) {
@@ -25,6 +24,18 @@
         checkBoxes.forEach(checkBox => {
             checkBox.checked = !allChecked;
         });
+        let listItems = document.querySelectorAll('.todo-list li');
+    listItems.forEach(listItem => {
+        let checkBox = listItem.querySelector('.todo-checkbox');
+        let textContent = listItem.querySelector('.item-text');
+
+        if (checkBox.checked) {
+            textContent.classList.add('checked-item');
+        } else {
+            textContent.classList.remove('checked-item');
+        }
+    });
+
 
         updateItemsLeft();
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
@@ -52,6 +63,16 @@
     });
     todoList.addEventListener('change', function(event) {
         if (event.target.classList.contains('todo-checkbox')) {
+            let checkBox = event.target;
+            let listItem = checkBox.parentNode;
+            let itemText = listItem.querySelector('.item-text');
+            if (checkBox.checked) {
+                itemText.classList.add('checked-item');
+            }
+            else {
+                itemText.classList.remove('checked-item');
+            }
+            
             hideOrShowClearButton(clearCompletedButton); // Update clear button visibility
             updateItemsLeft();
         }
@@ -110,6 +131,10 @@ function addListItem(inputBar, todoList) {
         //create li element
         let listItem = document.createElement('li')
         listItem.id = 'list-item';
+        //create textNode
+        let itemText = document.createElement('p');
+        itemText.className = 'item-text';
+        itemText.textContent = newItem;
         //create checkbox
         let checkBox = document.createElement('input');
         checkBox.setAttribute('type', 'checkbox');
@@ -122,7 +147,7 @@ function addListItem(inputBar, todoList) {
         //append items to ul
         
         listItem.appendChild(checkBox);
-        listItem.appendChild(document.createTextNode(newItem));
+        listItem.appendChild(itemText);
         listItem.appendChild(deleteButton);
         todoList.appendChild(listItem);
         //reset the input bar
@@ -150,11 +175,11 @@ function applyFilter(filterType) {
         let completed = checkBox.checked;
 
         if (filterType === 'all') {
-            item.style.display = 'block'; 
+            item.style.display = 'flex'; 
         } else if (filterType === 'active') {
-            item.style.display = completed ? 'none' : 'block';
+            item.style.display = completed ? 'none' : 'flex';
         } else if (filterType === 'completed') {
-            item.style.display = completed ? 'block' : 'none';
+            item.style.display = completed ? 'flex' : 'none';
         }
     });
 }
