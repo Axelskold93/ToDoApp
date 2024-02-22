@@ -31,5 +31,5 @@ test('Add3NotesAndConfirmItemCounter', async ({ page }) => {
   let itemsLeft = await page.textContent('#items-left');
   await expect(itemsLeft).toContain('2 items left');
 
-  
+
 });
