@@ -172,7 +172,7 @@ function findCheckedItems() {
     let completedItems = [];
     for (let i = 0; i < checkBoxes.length; i++) {
         if (checkBoxes[i].checked) {
-            completedItems.push(checkBoxes[i].parentNode);
+            completedItems.push(checkBoxes[i].parentNode.parentNode);
         }
     }
     return completedItems;
