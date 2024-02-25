@@ -6,10 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let filterContainer = document.querySelector('.filters');
     let filters = document.querySelectorAll('.filters a');
     let clearCompletedButton = document.querySelector('#clear-completed');
+
     hideOrShowClearButton(clearCompletedButton);
     hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
 
     toggleButton.addEventListener('click', function () {
+        toggleButton.style.color = '#000000';
         let checkBoxes = document.querySelectorAll('.todo-checkbox');
         let allChecked = true;
 
@@ -33,9 +35,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 textContent.classList.remove('checked-item');
             }
         });
+         if (!allChecked) {
+            toggleButton.style.color = '#000000';
+         }
+         else {
+            toggleButton.style.color = '#808080';
+         }
         updateItemsLeft();
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         hideOrShowClearButton(clearCompletedButton);
+        
 
     });
 
@@ -58,15 +67,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     todoList.addEventListener('change', function (event) {
         if (event.target.classList.contains('todo-checkbox')) {
+            let checkBoxes = document.querySelectorAll('.todo-checkbox');
             let checkBox = event.target;
             let listItem = checkBox.parentNode;
             let itemText = listItem.querySelector('.item-text');
+            let allChecked = true;
+            checkBoxes.forEach(checkBox => {
+                if (!checkBox.checked) {
+                    allChecked = false;
+                }
+            });
             if (checkBox.checked) {
                 itemText.classList.add('checked-item');
             }
             else {
                 itemText.classList.remove('checked-item');
             }
+            if (!allChecked) {
+                toggleButton.style.color = '#808080';
+             }
+             else {
+                toggleButton.style.color = '#000000';
+             }
             hideOrShowClearButton(clearCompletedButton);
             updateItemsLeft();
         }
@@ -126,7 +148,7 @@ function addListItem(inputBar, todoList) {
         let itemText = document.createElement('p');
         itemText.className = 'item-text';
         itemText.textContent = newItem;
-
+        let label = document.createElement('label');
         let checkBox = document.createElement('input');
         checkBox.setAttribute('type', 'checkbox');
         checkBox.className = 'todo-checkbox';
@@ -135,8 +157,9 @@ function addListItem(inputBar, todoList) {
         deleteButton.textContent = '❌';
         deleteButton.className = 'delete-button';
 
-        listItem.appendChild(checkBox);
-        listItem.appendChild(itemText);
+        label.appendChild(checkBox);
+        label.appendChild(itemText);
+        listItem.appendChild(label);
         listItem.appendChild(deleteButton);
         todoList.appendChild(listItem);
 

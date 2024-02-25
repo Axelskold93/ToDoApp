@@ -11,8 +11,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-
 }
 
 header {
@@ -34,14 +32,20 @@ header {
     width: 562.5px;
     text-align: center;
     justify-content: center;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 -1px 5px 0 #e6e6e6;
     background-color: white;
+    
 }
 
 #toggle {
     width: 62.5px;
+    color: grey;
     background-color: transparent;
     border: none;
+}
+
+#toggle:focus {
+    box-shadow: inset 0 -1px 5px 0 #b83f45;
 }
 
 #input-bar {
@@ -54,6 +58,11 @@ header {
     font-style: italic;
 }
 
+#input-bar:focus {
+    box-shadow: inset 0 -1px 5px 0 #b83f45;
+    outline: none;
+}
+
 .todo-list {
     list-style-type: none;
 }
@@ -63,14 +72,17 @@ header {
     flex-direction: row;
     width: 562.5px;
     height: 65px;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 -1px 5px 0 #e6e6e6;
     background-color: white;
     font-size: 24px;
     align-items: center;
     padding: 10px;
     
 }
-
+label {
+    display: flex;
+    align-items: center;
+}
 .todo-checkbox {
     width: 20px;
     height: 20px;
@@ -98,17 +110,31 @@ header {
     height: 40px;
     text-align: center;
     justify-content: space-evenly;
-    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    align-items: center;
+    box-shadow: inset 0 -1px 5px 0 #e6e6e6;
     background-color: white;
-    padding: 10px 20px;
+    /*padding: 10px 20px;*/
 }
 
-a,
-#clear-completed {
+a, #clear-completed {
     font-size: 15px;
     color: black;
     text-decoration: none;
+    border: solid 1px transparent;
+    padding: 3px;
+    border-radius: 5%
 }
+
+a:hover {
+    border: solid 1px #b83f45;
+    
+}
+
+#clear-completed:hover {
+    text-decoration: underline;
+
+}
+
 
 
 footer {
