@@ -35,16 +35,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 textContent.classList.remove('checked-item');
             }
         });
-         if (!allChecked) {
+        if (!allChecked) {
             toggleButton.style.color = '#000000';
-         }
-         else {
+        }
+        else {
             toggleButton.style.color = '#808080';
-         }
+        }
         updateItemsLeft();
         hideOrShowToggleAndFilter(todoCounter, toggleButton, filterContainer);
         hideOrShowClearButton(clearCompletedButton);
-        
+
 
     });
 
@@ -85,10 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (!allChecked) {
                 toggleButton.style.color = '#808080';
-             }
-             else {
+            }
+            else {
                 toggleButton.style.color = '#000000';
-             }
+            }
             hideOrShowClearButton(clearCompletedButton);
             updateItemsLeft();
         }
